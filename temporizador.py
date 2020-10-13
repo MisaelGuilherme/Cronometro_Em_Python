@@ -15,12 +15,12 @@ class LoginAdministracao:
         self.minuOperacao = None
         self.houOperacao = None
         
-        self.horas = Label(self.janelaCrono, text='00:', fg='cyan', bg='black', font=('arial',30))
-        self.horas.place(x=175, y=70)
-        self.minutos = Label(self.janelaCrono, text='00:', fg='cyan', bg='black', font=('arial',30))
+        self.horas = Label(self.janelaCrono, text='00:', fg='cyan', bg='black', font=('arial',35))
+        self.horas.place(x=168, y=70)
+        self.minutos = Label(self.janelaCrono, text='00:', fg='cyan', bg='black', font=('arial',35))
         self.minutos.place(x=233, y=70)
-        self.segundos = Label(self.janelaCrono, text='00', fg='cyan', bg='black', font=('arial',30))
-        self.segundos.place(x=291, y=70)      
+        self.segundos = Label(self.janelaCrono, text='00', fg='cyan', bg='black', font=('arial',35))
+        self.segundos.place(x=298, y=70)      
 
         self.chaveControle2 = False
         self.chaveFinalizar2 = False
@@ -95,6 +95,7 @@ class LoginAdministracao:
         self.minutos['text'] = self.mC
         self.horas['text'] = self.hC
         
+        #Chamando a mesma função a cada 1 segundo
         if self.chaveFinalizar2 == False:
             self.segundos.after(1000, self.iniciarContOper)
 
@@ -110,28 +111,32 @@ class LoginAdministracao:
         self.cont = 0
         self.brilhar()
     
+    #------------------------- PISCAR O TEMPORIZADOR AO TERMINAR CONTAGEM ------------------
     def brilhar(self):
         
         self.cont += 1
         div = self.cont % 2
-        
-        if div != 0:
-            self.jog1()
-        else:
-            self.jog2()
+
+        def brilho1():
             
-        self.segundos.after(500, self.brilhar)
-    
-    def jog1(self):
-        
             self.horas['fg'] = 'white'
             self.minutos['fg'] = 'white'
             self.segundos['fg'] = 'white'            
-
-    def jog2(self):
-        
+            
+        def brilho2():
+            
             self.horas['fg'] = 'cyan'
             self.minutos['fg'] = 'cyan'
-            self.segundos['fg'] = 'cyan'  
+            self.segundos['fg'] = 'cyan'            
+        
+        if div != 0:
+            brilho1()
+        else:
+            brilho2()
+            
+        self.segundos.after(100, self.brilhar)
+    
+
+  
             
 instancia = LoginAdministracao()
