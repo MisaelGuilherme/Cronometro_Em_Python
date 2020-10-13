@@ -1,4 +1,5 @@
 from tkinter import *
+import time
 
 class LoginAdministracao:
 
@@ -6,6 +7,7 @@ class LoginAdministracao:
     def __init__(self):
     
         self.janelaCrono = Tk()
+        self.janelaCrono.title("Cronômetro")
         self.janelaCrono.geometry('500x500+200+100')
         self.janelaCrono['bg'] = 'black'
         
@@ -13,19 +15,19 @@ class LoginAdministracao:
         self.minuOperacao = None
         self.houOperacao = None
         
-        self.horas = Label(self.janelaCrono, text='00', fg='cyan', bg='black', font=('arial',30), width=2)
-        self.horas.place(x=178, y=50)
-        self.minutos = Label(self.janelaCrono, text='00', fg='cyan', bg='black', font=('arial',30), width=2)
-        self.minutos.place(x=233, y=50)
-        self.segundos = Label(self.janelaCrono, text='00', fg='cyan', bg='black', font=('arial',30), width=2)
-        self.segundos.place(x=288, y=50)
+        self.horas = Label(self.janelaCrono, text='00:', fg='cyan', bg='black', font=('arial',30))
+        self.horas.place(x=175, y=70)
+        self.minutos = Label(self.janelaCrono, text='00:', fg='cyan', bg='black', font=('arial',30))
+        self.minutos.place(x=233, y=70)
+        self.segundos = Label(self.janelaCrono, text='00', fg='cyan', bg='black', font=('arial',30))
+        self.segundos.place(x=291, y=70)      
 
         self.chaveControle2 = False
         self.chaveFinalizar2 = False
 
 
-        self.botIniciarContOper = Button(self.janelaCrono, text='INICIAR', bg='cyan', fg='white', font=('arial', 20, 'bold'), command = lambda: self.iniciarContOper())
-        self.botIniciarContOper.place(x=195, y=200)
+        self.botIniciarContOper = Button(self.janelaCrono, text='INICIAR', bg='cyan', fg='white', activebackground='cyan', activeforeground='white', font=('arial', 20, 'bold'), command = lambda: self.iniciarContOper())
+        self.botIniciarContOper.place(x=195, y=220)
    
         self.janelaCrono.mainloop()    
 
@@ -34,8 +36,12 @@ class LoginAdministracao:
 
         if self.chaveControle2 == False:
             
-            self.finalizarContOper = Button(self.janelaCrono, text='FINALIZAR.OS', font=('arial', 12, 'bold'), width=15, command=lambda:self.finalizadaContOper())
-            self.finalizarContOper.pack()
+            self.finalizarContOper = Button(self.janelaCrono, text='PARAR', bg='red', fg='white', activebackground='red', activeforeground='white', font=('arial', 18, 'bold'), command=lambda:self.finalizadaContOper())            
+            self.finalizarContOper.place(x=140, y=220)
+            
+            self.pausarContOper = Button(self.janelaCrono, text='PAUSAR', bg='cyan', fg='white', activebackground='cyan', activeforeground='white', font=('arial', 18, 'bold'), command=lambda:self.finalizadaContOper())
+            self.pausarContOper.place(x=260, y=220)
+            
             self.chaveControle2 = True
             self.botIniciarContOper.destroy()
 
@@ -44,8 +50,8 @@ class LoginAdministracao:
         if self.secOperacao == None:
             self.secOperacao = 0
             self.sC = '00'
-            self.mC = '00'
-            self.hC = '00'
+            self.mC = '00:'
+            self.hC = '00:'
         self.secOperacao = self.secOperacao + 1
         if self.secOperacao > 0 and self.secOperacao <10:
             sA = self.secOperacao / 100
@@ -65,13 +71,13 @@ class LoginAdministracao:
             if self.minuOperacao > 0 and self.minuOperacao <10:
                 mA = self.minuOperacao / 100
                 mB = str(mA)
-                self.mC = mB[2:]
+                self.mC = mB[2:] + ':'
             else:
                 self.mC = str(self.minuOperacao)            
 
             if self.minuOperacao > 59:
                 self.minuOperacao = 0
-                self.minuC = '00'
+                self.minuC = '00:'
 
                 #configurando a hora do temporizador
                 if self.houOperacao == None:
@@ -81,22 +87,51 @@ class LoginAdministracao:
                 if self.houOperacao > 0 and self.houOperacao < 10:
                     hA = self.houOperacao / 100
                     hB = str(hA)
-                    self.hC = hB[2:]
+                    self.hC = hB[2:] + ':'
                 else:
-                    hB = str(self.houOperacao)
-
+                    hB = str(self.houOperacao) + ':'
+        
         self.segundos['text'] = self.sC
         self.minutos['text'] = self.mC
         self.horas['text'] = self.hC
-
+        
         if self.chaveFinalizar2 == False:
             self.segundos.after(1000, self.iniciarContOper)
-        else:
-            self.finalizarContOper.destroy()
 
     #------------------------------------ PARAR O TEMPORIZADOR --------------------------
     def finalizadaContOper(self):
         
         self.chaveFinalizar2 = True
+        self.finalizarContOper.destroy()
+        self.pausarContOper.destroy()
+        
+        self.zerarContOper = Button(self.janelaCrono, text='ZERAR', bg='red', fg='white', activebackground='cyan', activeforeground='white', font=('arial', 18, 'bold'), command=lambda:self.finalizadaContOper())
+        self.zerarContOper.place(x=210, y=220)
+        self.cont = 0
+        self.brilhar()
+    
+    def brilhar(self):
+        
+        self.cont += 1
+        div = self.cont % 2
+        
+        if div != 0:
+            self.jog1()
+        else:
+            self.jog2()
+            
+        self.segundos.after(500, self.brilhar)
+    
+    def jog1(self):
+        
+            self.horas['fg'] = 'white'
+            self.minutos['fg'] = 'white'
+            self.segundos['fg'] = 'white'            
 
+    def jog2(self):
+        
+            self.horas['fg'] = 'cyan'
+            self.minutos['fg'] = 'cyan'
+            self.segundos['fg'] = 'cyan'  
+            
 instancia = LoginAdministracao()
