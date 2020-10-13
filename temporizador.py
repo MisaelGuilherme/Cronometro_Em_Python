@@ -7,24 +7,25 @@ class LoginAdministracao:
     
         self.janelaCrono = Tk()
         self.janelaCrono.geometry('500x500+200+100')
-
+        self.janelaCrono['bg'] = 'black'
+        
         self.secOperacao = None
         self.minuOperacao = None
         self.houOperacao = None
-
-        self.segundos = Label(self.janelaCrono, text='00', font=('arial',30), width=2)
-        self.segundos.place(x=325, y=50)
-        self.minutos = Label(self.janelaCrono, text='00', font=('arial',30), width=2)
-        self.minutos.place(x=270, y=50)
-        self.horas = Label(self.janelaCrono, text='00', font=('arial',30), width=2)
-        self.horas.place(x=215, y=50)
+        
+        self.horas = Label(self.janelaCrono, text='00', fg='cyan', bg='black', font=('arial',30), width=2)
+        self.horas.place(x=178, y=50)
+        self.minutos = Label(self.janelaCrono, text='00', fg='cyan', bg='black', font=('arial',30), width=2)
+        self.minutos.place(x=233, y=50)
+        self.segundos = Label(self.janelaCrono, text='00', fg='cyan', bg='black', font=('arial',30), width=2)
+        self.segundos.place(x=288, y=50)
 
         self.chaveControle2 = False
         self.chaveFinalizar2 = False
 
 
-        self.botIniciarContOper = Button(self.janelaCrono, text='INICIAR', font=('arial', 20, 'bold'), command = lambda: self.iniciarContOper())
-        self.botIniciarContOper.place(x=230, y=150)
+        self.botIniciarContOper = Button(self.janelaCrono, text='INICIAR', bg='cyan', fg='white', font=('arial', 20, 'bold'), command = lambda: self.iniciarContOper())
+        self.botIniciarContOper.place(x=195, y=200)
    
         self.janelaCrono.mainloop()    
 
