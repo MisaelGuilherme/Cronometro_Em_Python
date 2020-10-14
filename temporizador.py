@@ -5,6 +5,7 @@ class LoginAdministracao:
 
     #------------------------------------ LABELS QUE IMPRIMEM O CRONÔMETRO - CRONÔMETRO ------------------------------------
     def __init__(self):
+        
         self.janelaCrono = Tk()
         self.janelaCrono.title("Cronômetro Neon-Style")
         self.janelaCrono.iconbitmap("ico1.ico")
@@ -35,8 +36,9 @@ class LoginAdministracao:
         self.segundos = Label(self.display, text='00', fg='cyan', bg='black', font=('arial',35))
         self.segundos.place(x=140, y=0)      
         self.cont1 = 0
-        self.chaveControle2 = False
-        self.chaveFinalizar2 = False
+        self.chaveControle = False
+        self.chaveControle2 =  False
+        self.chaveFinalizar = False
 
         self.botIniciarContOper = Button(self.janelaCrono, text='INICIAR', bg='black', fg='white', activebackground='black', activeforeground='cyan', font=('arial', 20, 'bold'), command = lambda: self.iniciarContOper())
         self.botIniciarContOper.place(x=140, y=240)
@@ -46,7 +48,7 @@ class LoginAdministracao:
     
     def brilhar1(self):
         
-        if self.chaveControle2 ==  False:
+        if self.chaveControle ==  False:
             self.cont1 += 1
             div = self.cont1 % 2
             def brilho1():
@@ -63,15 +65,15 @@ class LoginAdministracao:
     #------------------------------------ TEMPORIZADOR -----------------------------------
     def iniciarContOper(self):
 
-        if self.chaveControle2 == False:
+        if self.chaveControle == False:
             
-            self.finalizarContOper = Button(self.janelaCrono, text='PARAR', bg='black', fg='white', activebackground='black', activeforeground='red', font=('arial', 18, 'bold'), command=lambda:self.finalizadaContOper())            
+            self.finalizarContOper = Button(self.janelaCrono, text='PARAR', bg='black', fg='red', activebackground='black', activeforeground='red', font=('arial', 18, 'bold'), command=lambda:self.finalizadaContOper())            
             self.finalizarContOper.place(x=90, y=240)
                         
-            self.pausarContOper = Button(self.janelaCrono, text='PAUSAR', bg='black', fg='white', activebackground='black', activeforeground='green', font=('arial', 18, 'bold'), command=lambda:self.pausaContOper())
+            self.pausarContOper = Button(self.janelaCrono, text='PAUSAR', bg='black', fg='green', activebackground='black', activeforeground='green', font=('arial', 18, 'bold'), command=lambda:self.pausaContOper())
             self.pausarContOper.place(x=210, y=240)
             
-            self.chaveControle2 = True
+            self.chaveControle = True
             self.botIniciarContOper.destroy()
             
             self.brilhar2()
@@ -127,12 +129,12 @@ class LoginAdministracao:
         self.horas['text'] = self.hC
         
         #Chamando a mesma função a cada 1 segundo
-        if self.chaveFinalizar2 == False:
+        if self.chaveFinalizar == False:
             self.segundos.after(1000, self.iniciarContOper)
 
     def brilhar2(self):
 
-        if self.chaveFinalizar2 == False:
+        if self.chaveFinalizar == False:
             self.cont1 += 1
             div = self.cont1 % 2
             def brilho1():
@@ -151,7 +153,7 @@ class LoginAdministracao:
     #------------------------------------ PARAR O TEMPORIZADOR --------------------------
     def finalizadaContOper(self):
         
-        self.chaveFinalizar2 = True
+        self.chaveFinalizar = True
         self.finalizarContOper.destroy()
         self.pausarContOper.destroy()
         
@@ -169,30 +171,21 @@ class LoginAdministracao:
             self.horas['fg'] = 'cyan'
             self.minutos['fg'] = 'cyan'
             self.segundos['fg'] = 'cyan'
-            self.chaveFinalizar2 = False
+            self.chaveFinalizar = False
             print(self.minuOperacao)
             self.limparContOper.destroy()        
             
             self.botIniciarContOper = Button(self.janelaCrono, text='INICIAR', bg='black', fg='white', activebackground='black', activeforeground='cyan', font=('arial', 20, 'bold'), command = lambda: self.iniciarContOper())
             self.botIniciarContOper.place(x=140, y=240)
             
-            self.chaveControle2 = False
+            self.chaveControle = False
             self.brilhar1()            
         
         self.limparContOper = Button(self.janelaCrono, text='LIMPAR', bg='black', border=5, fg='white', activebackground='black', activeforeground='cyan', font=('arial', 18, 'bold'), command = limpar)
         self.limparContOper.place(x=145, y=240)
         self.cont = 0
         self.brilhar()
-    
-    def pausaContOper(self):
         
-        self.chaveFinalizar2 = True
-        self.pausarContOper.destroy()
-        
-        self.retomarContOper = Button(self.janelaCrono, text='Retomar', bg='black', fg='white', activebackground='black', activeforeground='green', font=('arial', 18, 'bold'))
-        self.pausarContOper.place(x=210, y=240)        
-        
-            
     #------------------------- PISCAR O TEMPORIZADOR AO TERMINAR CONTAGEM ------------------
     def brilhar(self):
         
@@ -223,13 +216,34 @@ class LoginAdministracao:
             self.minutos['fg'] = 'cyan'
             self.segundos['fg'] = 'cyan'     
             self.limparContOper['fg'] = 'white'
-            #self.limparContOper['bg'] = 'cyan'       
         
-        if div != 0 and self.chaveFinalizar2 == True:
+        if div != 0 and self.chaveFinalizar == True and self.chaveControle2 == False:
             brilho1()
-        elif div == 0 and self.chaveFinalizar2 == True:
+        elif div == 0 and self.chaveFinalizar == True and self.chaveControle2 == False:
             brilho2()
             
-        self.segundos.after(100, self.brilhar)
+        self.segundos.after(100, self.brilhar)        
+    
+    def pausaContOper(self):
+
+        self.chaveControle2 =  True
+        self.chaveFinalizar = True
+        
+        self.pausarContOper.destroy()
+        
+        def retomarContOper():
+            
+            self.chaveFinalizar = False 
+            self.iniciarContOper()
+            
+            self.retomarContOper.destroy()
+            
+            self.pausarContOper = Button(self.janelaCrono, text='PAUSAR', bg='black', fg='green', activebackground='black', activeforeground='green', font=('arial', 18, 'bold'), command=lambda:self.pausaContOper())
+            self.pausarContOper.place(x=210, y=240)            
+            
+        self.retomarContOper = Button(self.janelaCrono, text='RETOMAR', bg='black', fg='yellow', activebackground='black', activeforeground='yellow', font=('arial', 18, 'bold'), command = retomarContOper)
+        self.retomarContOper.place(x=210, y=240)
+        
+        
 
 instancia = LoginAdministracao()
