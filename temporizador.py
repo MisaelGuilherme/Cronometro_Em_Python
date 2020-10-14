@@ -68,8 +68,7 @@ class LoginAdministracao:
         
     #------------------------------------ TEMPORIZADOR -----------------------------------
     def iniciarContOper(self):
-        print(self.chaveFinalizar)
-        print(self.chaveControle)
+
         if self.chaveControle == False:
             
             self.finalizarContOper = Button(self.janelaCrono, text='PARAR', bg='black', fg='red', activebackground='black', activeforeground='red', font=('arial', 18, 'bold'), command=lambda:self.finalizadaContOper())            
@@ -236,6 +235,7 @@ class LoginAdministracao:
         
         def retomarContOper():
             
+            self.chaveControle2 = False
             self.chaveFinalizar = False 
             self.iniciarContOper()
             
@@ -244,7 +244,30 @@ class LoginAdministracao:
             self.pausarContOper = Button(self.janelaCrono, text='PAUSAR', bg='black', fg='green', activebackground='black', activeforeground='green', font=('arial', 18, 'bold'), command=lambda:self.pausaContOper())
             self.pausarContOper.place(x=210, y=240)            
             
+            self.brilhar_02()            
+            
         self.retomarContOper = Button(self.janelaCrono, text='RETOMAR', bg='black', fg='yellow', activebackground='black', activeforeground='yellow', font=('arial', 18, 'bold'), command = retomarContOper)
         self.retomarContOper.place(x=210, y=240)
+        
+        self.brilhar_03()
+        
+    def brilhar_03(self):
+        
+        if self.chaveFinalizar == True:
+            
+            self.cont1 += 1
+            div = self.cont1 % 2
+            def brilho1():
+                self.finalizarContOper['fg'] = 'red'
+                self.retomarContOper['fg'] = 'white'
+            def brilho2():      
+                self.finalizarContOper['fg'] = 'white'
+                self.retomarContOper['fg'] = 'yellow'
+            if div != 0:
+                brilho1()
+            else:
+                brilho2()
+                
+            self.segundos.after(300, self.brilhar_03)
 
 instancia = LoginAdministracao()
