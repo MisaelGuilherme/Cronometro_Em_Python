@@ -1,5 +1,7 @@
 from tkinter import *
-import time
+
+#Programador: Misael Jesus
+#Date: 13/10/2020
 
 class LoginAdministracao:
 
@@ -36,15 +38,15 @@ class LoginAdministracao:
         self.minuOperacao = None
         self.houOperacao = None
         
-        self.display = Frame(self.janelaCrono, width=200, height=70, bg='black')
-        self.display.place(x=105, y=50)
+        self.display = Frame(self.janelaCrono, width=230, height=70, bg='black')
+        self.display.place(x=90, y=50)
         
-        self.horas = Label(self.display, text='00:', fg='cyan', bg='black', font=('arial',35))
+        self.horas = Label(self.display, text='00:', fg='cyan', bg='black', font=('arial',45))
         self.horas.place(x=0, y=0)
-        self.minutos = Label(self.display, text='00:', fg='cyan', bg='black', font=('arial',35))
-        self.minutos.place(x=70, y=0)
-        self.segundos = Label(self.display, text='00', fg='cyan', bg='black', font=('arial',35))
-        self.segundos.place(x=140, y=0)      
+        self.minutos = Label(self.display, text='00:', fg='cyan', bg='black', font=('arial',45))
+        self.minutos.place(x=80, y=0)
+        self.segundos = Label(self.display, text='00', fg='cyan', bg='black', font=('arial',45))
+        self.segundos.place(x=160, y=0)      
 
         self.botIniciarContOper = Button(self.janelaCrono, text='INICIAR', bg='black', fg='white', activebackground='black', activeforeground='cyan', font=('arial', 20, 'bold'), command = lambda: self.iniciarContOper())
         self.botIniciarContOper.place(x=140, y=240)
@@ -89,7 +91,7 @@ class LoginAdministracao:
         
     #------------------------------------ INICIANDO CONTAGEM DO TEMPORIZADOR -----------------------------------
     def iniciarContOper(self):
-
+        
         if self.chaveControle == False:
             
             self.finalizarContOper = Button(self.janelaCrono, text='PARAR', bg='black', fg='red', activebackground='black', activeforeground='red', font=('arial', 18, 'bold'), command=lambda:self.finalizadaContOper())            
@@ -215,6 +217,18 @@ class LoginAdministracao:
             self.horas['fg'] = 'cyan'
             self.minutos['fg'] = 'cyan'
             self.segundos['fg'] = 'cyan'
+
+            self.horas['font'] = 'arial',45
+            self.minutos['font'] = 'arial',45
+            self.segundos['font'] = 'arial',45
+            
+            self.horas.place(x=0, y=0)
+            self.minutos.place(x=80, y=0)
+            self.segundos.place(x=160, y=0)
+                        
+            self.display['width'] = 230
+            self.display.place(x=90 , y=50)
+            
             self.limparContOper.destroy()
             
             self.botIniciarContOper = Button(self.janelaCrono, text='INICIAR', bg='black', fg='white', activebackground='black', activeforeground='cyan', font=('arial', 20, 'bold'), command = lambda: self.iniciarContOper())
@@ -244,16 +258,18 @@ class LoginAdministracao:
             self.horas['fg'] = 'white'
             self.minutos['fg'] = 'white'
             self.segundos['fg'] = 'white'
-            self.limparContOper['fg'] = 'cyan'
             
-            self.display['width'] = 230
-            self.horas['font'] = 'arial',45
-            self.minutos['font'] = 'arial',45
-            self.segundos['font'] = 'arial',45
+            self.horas['font'] = 'arial',50
+            self.minutos['font'] = 'arial',50
+            self.segundos['font'] = 'arial',50
+            
             self.horas.place(x=0, y=0)
-            self.minutos.place(x=80, y=0)
-            self.segundos.place(x=160, y=0)
-            self.display.place(x=90 , y=50)
+            self.minutos.place(x=95, y=0)
+            self.segundos.place(x=190, y=0)
+                        
+            self.display['width'] = 265
+            self.display.place(x=80 , y=50)  
+            self.limparContOper['fg'] = 'cyan'
             
         def brilho2():
             
