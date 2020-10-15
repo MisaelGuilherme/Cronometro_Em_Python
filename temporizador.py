@@ -43,12 +43,18 @@ class LoginAdministracao:
 
         self.botIniciarContOper = Button(self.janelaCrono, text='INICIAR', bg='black', fg='white', activebackground='black', activeforeground='cyan', font=('arial', 20, 'bold'), command = lambda: self.iniciarContOper())
         self.botIniciarContOper.place(x=140, y=240)
+        self.botIniciarContOper.focus_force()
+        self.botIniciarContOper.bind("<Return>", self.teclaEnter)
         
         #Chamando função que fará o  botão INICIAR piscar
         self.brilhar_01()
    
         self.janelaCrono.mainloop()            
     
+    def teclaEnter(self, event):
+
+        self.iniciarContOper()
+        
     #Função que fará o botão iniciar piscar
     def brilhar_01(self):
         
@@ -81,14 +87,17 @@ class LoginAdministracao:
             self.botIniciarContOper.destroy()
             
             self.brilhar_02()
-
+        
         #configurando os segundos para aparecer no label
         if self.secOperacao == None:
             self.secOperacao = 0
             self.sC = '00'
             self.mC = '00:'
             self.hC = '00:'
-        self.secOperacao = self.secOperacao + 1
+        
+        if self.chaveFinalizar == False:
+            self.secOperacao = self.secOperacao + 1
+            
         if self.secOperacao > 0 and self.secOperacao <10:
             sA = self.secOperacao / 100
             sB = str(sA)
@@ -102,7 +111,9 @@ class LoginAdministracao:
             #configurando os minutos para aparecer no label
             if self.minuOperacao == None:
                 self.minuOperacao = 0
-            self.minuOperacao = self.minuOperacao + 1
+            
+            if self.chaveFinalizar == False:
+                self.minuOperacao = self.minuOperacao + 1
 
             if self.minuOperacao > 0 and self.minuOperacao <10:
                 mA = self.minuOperacao / 100
@@ -118,7 +129,9 @@ class LoginAdministracao:
                 #configurando a hora do temporizador
                 if self.houOperacao == None:
                     self.houOperacao = 0
-                self.houOperacao = self.houOperacao + 1
+                
+                if self.chaveFinalizar == False:
+                    self.houOperacao = self.houOperacao + 1
 
                 if self.houOperacao > 0 and self.houOperacao < 10:
                     hA = self.houOperacao / 100
