@@ -18,7 +18,7 @@ class LoginAdministracao:
         
         self.janelaCrono = Tk()
         self.janelaCrono.title("Cronômetro Neon-Style")
-        self.janelaCrono.iconbitmap("icons/icon.ico")
+        self.janelaCrono.iconbitmap("icon.ico")
         
         largura = 400
         altura = 450
@@ -85,10 +85,7 @@ class LoginAdministracao:
                 brilho2()
                 
             self.segundos.after(200, self.brilhar_01)
-     
-       
-       
-        
+
     #------------------------------------ INICIANDO CONTAGEM DO TEMPORIZADOR -----------------------------------
     def iniciarContOper(self):
         
@@ -164,6 +161,7 @@ class LoginAdministracao:
         
         #Chamando a mesma função a cada 1 segundo
         if self.chaveFinalizar == False:
+            
             self.segundos.after(1000, self.iniciarContOper)
 
     def brilhar_02(self):
@@ -239,14 +237,14 @@ class LoginAdministracao:
             
             #Chamando função que fará o botão "Iniciar" piscar
             self.brilhar_01()
-        
+                    
         self.limparContOper = Button(self.janelaCrono, text='LIMPAR', bg='black', border=5, fg='white', activebackground='black', activeforeground='cyan', font=('arial', 18, 'bold'), command = limpar)
         self.limparContOper.place(x=145, y=240)
         self.cont = 0
         
         #Chamando função que fará o botão "Limpar" piscar e o cronômetro "Piscar"
         self.brilhar()
-        
+    
     #Pisca o temporizador ao terminar contagem
     def brilhar(self):
         
@@ -312,13 +310,15 @@ class LoginAdministracao:
             self.pausarContOper.place(x=210, y=240)            
             
             #Chamando função que fará o botão "Pausar" piscar e o botão "Parar" piscar
-            self.brilhar_02()            
+            self.brilhar_02()   
+                  
             
         self.retomarContOper = Button(self.janelaCrono, text='RETOMAR', bg='black', fg='yellow', activebackground='black', activeforeground='yellow', font=('arial', 18, 'bold'), command = retomarContOper)
         self.retomarContOper.place(x=210, y=240)
         
         #Chamando função que fará o botão "Retomar" piscar e o botão "Parar" piscar
         self.brilhar_03()
+        
         
     def brilhar_03(self):
         
@@ -329,9 +329,11 @@ class LoginAdministracao:
             def brilho1():
                 self.finalizarContOper['fg'] = 'red'
                 self.retomarContOper['fg'] = 'white'
+                
             def brilho2():      
                 self.finalizarContOper['fg'] = 'white'
                 self.retomarContOper['fg'] = 'yellow'
+                
             if div != 0:
                 brilho1()
             else:
